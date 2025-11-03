@@ -1,0 +1,32 @@
+import 'reflect-metadata';
+import { APP_BASE_HREF } from '@angular/common';
+import { renderApplication } from '@angular/platform-server';
+import { enableProdMode, StaticProvider } from '@angular/core';
+import { createServerRenderer } from 'aspnet-prerendering';
+import { DATA_FROM_SERVER } from './app/providers/data-from-server.provider';
+import { App } from './app/app';
+import { bootstrapApplication, BootstrapContext } from '@angular/platform-browser';
+import { config as serverConfig } from './app/app.config.server';
+
+enableProdMode();
+
+export default createServerRenderer(params => {
+  const providers: StaticProvider[] = [
+    { provide: APP_BASE_HREF, useValue: params.baseUrl },
+    { provide: DATA_FROM_SERVER, useValue: params.data },
+  ];
+
+  const options = {
+    document: params.data.originalHtml,
+    url: params.url,
+    platformProviders: providers
+  };
+
+  // Bypass ssr api call cert warnings in development
+  process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0";
+
+  //const renderPromise = renderModule(AppServerModule, options);
+  const renderPromise = renderApplication((context: BootstrapContext) => bootstrapApplication(App, serverConfig, context), options);
+
+  return renderPromise.then(html => ({ html }));
+});
