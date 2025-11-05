@@ -34,8 +34,6 @@ app.MapControllerRoute(
 app.UseSpaImproved(spa =>
 {
     spa.Options.SourcePath = "ClientApp";
-    // For angular 17+
-    spa.Options.CliRegexes = [new Regex(@"Local\:\s+(?<openbrowser>https?\:\/\/(.+))")];
     spa.UseSpaPrerendering(options =>
     {
         options.BootModuleBuilder = builder.Environment.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr", @"Build at\:", 1) : null;
@@ -44,10 +42,10 @@ app.UseSpaImproved(spa =>
     });
     if (builder.Environment.IsDevelopment())
     {
-        //spa.UseAngularCliServer(npmScript: "start");
+        spa.UseAngularCliServer(npmScript: "start", cliRegexes: [new Regex(@"Local\:\s+(?<openbrowser>https?\:\/\/(.+))")]);
 
-        // For now you'll have to start Angular CLI manually with `npm start`
-        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+        // When you want to start Angular CLI manually with `npm start`
+        //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
     }
 });
 

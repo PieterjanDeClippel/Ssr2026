@@ -16,7 +16,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="10.0.0-rc.1" />
-		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="10.0.0-rc.1" />
+		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="10.0.0-rc.4" />
 	</ItemGroup>
 
 	<ItemGroup>
