@@ -10,7 +10,7 @@
     "dev:ssr": "ng run ClientApp:serve-ssr",
     "serve:ssr": "node dist/ClientApp/server/main.js",
     "build:ssr": "ng build && ng run ClientApp:server",
-    "build:ssr:prod": "ng build --configuration=production && ng run ClientApp:server:production"
+    "build:ssr:production": "ng build --configuration=production && ng run ClientApp:server:production"
   },
   "prettier": {
     "printWidth": 100,
